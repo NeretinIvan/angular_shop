@@ -5,6 +5,9 @@
             <p>{{goodsInfo.price}}</p>
             <button (click)="showPurchaseForm()">show form</button>
         </div>
-        <app-purchase-form *ngIf="isPurchaseFormShown"></app-purchase-form>
+        <app-purchase-form 
+            *ngIf="isPurchaseFormShown"
+            [goodsSelected]="goodsInfo">
+        </app-purchase-form>
     </div>
 </div>

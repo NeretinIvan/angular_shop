@@ -1,1 +1,31 @@
-<p>purchase-form works!</p>
+<form [formGroup]="purchaseForm">
+
+    <div class="field">
+        <label for="firstName">First name: </label>
+        <input id="firstName" type="text" formControlName="firstName">
+    </div>
+
+    <div class="field">
+        <label for="lastName">Last name: </label>
+        <input id="lastName" type="text" formControlName="lastName">
+    </div>
+
+    <div class="field">
+        <label for="patronymic">Patronymic (if exist): </label>
+        <input id="patronymic" type="text" formControlName="patronymic">
+    </div>
+    
+    <div class="field">
+        <label for="phoneNumber">Phone number: </label>
+        <input id="phoneNumber" type="number" formControlName="phoneNumber">
+    </div>
+
+    <div class="field">
+        <label for="email">Email: </label>
+        <input id="email" type="text" formControlName="email">
+    </div>
+
+    <app-selected-goods-form-container formControlName="goods"></app-selected-goods-form-container>
+
+    <button (click)="onFormSubmit()">Submit</button>
+</form>
