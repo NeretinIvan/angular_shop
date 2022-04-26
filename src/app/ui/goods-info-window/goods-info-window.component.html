@@ -1,0 +1,10 @@
+<div class="background" (click)="onBackgroundClick($event)">
+    <div class="window" (click)="onWindowClick($event)">
+        <div *ngIf="isPurchaseFormShown === false">
+            <p>{{goodsInfo.name}}</p>
+            <p>{{goodsInfo.price}}</p>
+            <button (click)="showPurchaseForm()">show form</button>
+        </div>
+        <app-purchase-form *ngIf="isPurchaseFormShown"></app-purchase-form>
+    </div>
+</div>

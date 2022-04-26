@@ -1,1 +1,16 @@
-<p>gallery works!</p>
+<div class="gallery-container">
+    <div class="gallery" id="gallery">
+        <div class="goods" *ngFor="let item of goods; index as i">
+            <app-goods-card 
+                [goodsInfo]="goods[i]"
+                (onCardSelected)="onCardSelected($event)">
+            </app-goods-card>
+        </div>
+    </div>
+</div>
+
+<app-goods-info-window 
+    *ngIf="isGoodsInfoWindowShown"
+    (infoWindowClosed)="hideGoodsInfoWindow()"
+    [goodsInfo]="getSelectedGoods()">
+</app-goods-info-window>
