@@ -5,6 +5,7 @@ import { GalleryComponent } from './gallery.component';
 import { GoodsCardComponent } from './goods-card/goods-card.component';
 
 import { GoodsInfoWindowModule } from '../goods-info-window/goods-info-window.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { GoodsInfoWindowModule } from '../goods-info-window/goods-info-window.mo
   ],
   imports: [
     CommonModule,
-    GoodsInfoWindowModule
+    GoodsInfoWindowModule,
+    SharedModule
   ]
 })
 export class GalleryModule { }

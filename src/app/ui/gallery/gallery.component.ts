@@ -13,7 +13,8 @@ export class GalleryComponent implements AfterViewInit {
   public selectedGoods: GoodsInfo | null = null;
 
   private gallery: HTMLElement | null = null;
-  private readonly GOODS_PER_LOAD = 1;
+  private isDataLoading: boolean = false;
+  private readonly GOODS_PER_LOAD = 2;
   private readonly SCROLL_LOADING_GAP = 100;
 
   constructor(private goodsLoader: GoodsInfoLoaderService,
@@ -38,17 +39,6 @@ export class GalleryComponent implements AfterViewInit {
     return this.selectedGoods;
   }
 
-
-  public loadAdditionalGoodsCards(amount: number): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      this.goods = new Array(...this.goods, ...new Array(amount).fill(null));
-      this.goodsLoader.getGoodsInfos(this.GOODS_PER_LOAD).then((value: GoodsInfo[]) => {
-        this.goods = new Array(...removeNullsFromArray(this.goods, amount), ...value);
-        resolve();
-      })
-    })
-  }
-
   ngAfterViewInit(): void {
     this.gallery = document.getElementById("gallery")
     
@@ -57,7 +47,7 @@ export class GalleryComponent implements AfterViewInit {
     });
 
     setTimeout(() => {
-      this.initGoods();
+      this.onScroll();
     }, 0);
   }
 
@@ -66,18 +56,7 @@ export class GalleryComponent implements AfterViewInit {
 
     if (this.isCameraTouchedBottom()) {
       await this.loadAdditionalGoodsCards(this.GOODS_PER_LOAD);
-    }
-  }
-
-  private initGoods() {
-    if (!this.gallery) return;
-
-    if (this.isCameraTouchedBottom()) {
-      setTimeout(() => {
-        this.onScroll().then(() => {
-          this.initGoods();
-        });
-      }, 0)
+      this.onScroll();
     }
   }
 
@@ -85,6 +64,37 @@ export class GalleryComponent implements AfterViewInit {
     if (!this.gallery) return false;
 
     return (this.gallery.offsetHeight + this.gallery.offsetTop <= window.scrollY + window.innerHeight + this.SCROLL_LOADING_GAP);
+  }
+
+  async loadAdditionalGoodsCards(amount: number): Promise<void> {
+    const previousDataLoading = this.waitForPreviousDataLoading();
+    await previousDataLoading;
+    return new Promise<void>((resolve, reject) => {
+      this.isDataLoading = true;
+      this.goods = new Array(...this.goods, ...new Array(amount).fill(null));
+      this.goodsLoader.getGoodsInfos(this.GOODS_PER_LOAD).then((value: (GoodsInfo | null)[]) => {
+        this.goods = new Array(...getArrayWithoutNulls(this.goods), ...value, ...getNullsFromArray(removeNullsFromArray(this.goods, amount)));
+        resolve();
+      })
+    }).then(() => {
+      this.isDataLoading = false;
+      Promise.resolve(previousDataLoading);
+    })
+  }
+
+  async waitForPreviousDataLoading(): Promise<void> {
+    let resolveDataLoading = () => {};
+    const dataLoadingCheck = new Promise<void>((resolve) => {
+      resolveDataLoading = resolve;
+    })
+
+    if (!this.isDataLoading) {
+      resolveDataLoading();
+    } 
+    else {
+      await dataLoadingCheck;
+    }
+    return dataLoadingCheck;
   }
 }
 
@@ -94,4 +104,12 @@ function removeNullsFromArray<T>(array: Array<T | null>, amount: number): Array<
     if (value === null) count++;
     return (value != null) || (count > amount);
   })
+}
+
+function getNullsFromArray<T>(array: Array<T | null>): Array<T | null> {
+  return array.filter((value: T | null) => value === null);
+}
+
+function getArrayWithoutNulls<T>(array: Array<T | null>): Array<T | null> {
+  return array.filter((value: T | null) => value !== null);
 }

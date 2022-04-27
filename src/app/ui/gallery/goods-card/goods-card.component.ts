@@ -14,6 +14,7 @@ export class GoodsCardComponent {
   public onCardSelected = new EventEmitter<GoodsInfo>();
 
   public onCardClick() {
+    if (this.goodsInfo === null) return;
     this.onCardSelected.emit(this.getGoodsInfo())
   }
 

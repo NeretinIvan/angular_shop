@@ -1,17 +1,17 @@
 import { StreetAddress } from "./street-address";
 
 export interface GoodsInfo {
-    id: number;
     name: string;
     price: number;
     description?: string | null;
-    addresses: StreetAddress[]
+    image?: string | null;
+    addresses: StreetAddress[];
 }
 
 export const DEFAULT_GOODS_PLACEHOLDER: GoodsInfo = {
-    id: 0,
     name: 'goods-name',
     price: 0.00,
+    image: "/assets/gif/loading.gif",
     addresses: [
       {
         address: "goods address",
