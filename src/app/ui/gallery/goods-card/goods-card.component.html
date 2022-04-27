@@ -1,5 +1,7 @@
-<div class="layout" (click)="onCardClick()">
+<div class="layout" (click)="onCardClick()" [class.not-loaded]="goodsInfo === null">
     <div class="preview-image"></div>
-    <p class="name">{{goodsInfo.name}}</p>
-    <p class="price">{{goodsInfo.price}}</p>
+    <div class="description">
+        <p class="name">{{getGoodsInfo().name}}</p>
+        <p class="price">{{getGoodsInfo().price}}</p>
+    </div>
 </div>

@@ -1,7 +1,9 @@
 .preview-image {
-    height: 7rem;
-    width: 7rem;
+    height: 14rem;
+    width: 14rem;
     background-color: green;
+    border-radius: 20px 20px 0 0;
+    border: 1px solid lightgray;
 }
 
 .layout {
@@ -9,4 +11,52 @@
     flex-direction: column;
     align-items: center;
     padding: 10px;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 3rem;
+    width: 100%;
+    background-color: lightgray;
+    border-radius: 0 0 20px 20px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.name {
+    margin: 5px 0 5px 0;
+    min-height: 1.5rem;
+}
+
+.price {
+    margin: 5px 0 5px 0;
+    min-height: 1rem;
+}
+
+.not-loaded {
+    .price {
+        background-color: white;
+        width: 40%;
+        color: white;
+    }
+
+    .name {
+        background-color: white;
+        width: 80%;
+        color: white;
+    }
+
+    .preview-image {
+        box-sizing: border-box;
+        background-image: url("/assets/gif/loading.gif");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: white;
+        background-size: 2rem;
+    }
 }

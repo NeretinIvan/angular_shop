@@ -10,14 +10,16 @@ export class GoodsInfoLoaderService {
 
   constructor() { }
 
-  public getAnotherGoodsInfos(amount: number = this.DEFAULT_GOODS_INFO_LOADINGS): GoodsInfo[] {
+  public getAnotherGoodsInfos(amount: number = this.DEFAULT_GOODS_INFO_LOADINGS): Promise<GoodsInfo[]> {
     this.goodsLoaded += amount;
     if (this.goodsLoaded > 50) this.goodsLoaded = 50; //delete later
     return this.getGoodsInfos(this.goodsLoaded);
   }
 
-  public getGoodsInfos(amount: number): GoodsInfo[] {
+  public getGoodsInfos(amount: number): Promise<GoodsInfo[]> {
     //TODO: remove placeholder and make proper logic
+
+    this.goodsLoaded++;
 
     let goodsLoaded = new Array<GoodsInfo>(amount);
 
@@ -35,9 +37,15 @@ export class GoodsInfoLoaderService {
       }
     )
 
-    goodsLoaded.map((value: GoodsInfo) => value.price += amount)
+    goodsLoaded.map((value: GoodsInfo, index: number) => {
+      value.price = this.goodsLoaded;
+    })
 
-    return goodsLoaded;
+    return new Promise<GoodsInfo[]>((resolve, reject) => {
+      setTimeout(() => {
+        resolve(goodsLoaded);
+      }, 1000)
+    })
   }
 
   public resetLoadedGoods(): void {

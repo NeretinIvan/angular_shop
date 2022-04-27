@@ -8,12 +8,17 @@ import { GoodsInfo, DEFAULT_GOODS_PLACEHOLDER } from 'src/app/domain';
 })
 export class GoodsCardComponent {
   @Input()
-  public goodsInfo: GoodsInfo = DEFAULT_GOODS_PLACEHOLDER;
+  public goodsInfo: GoodsInfo | null = null;
 
   @Output()
   public onCardSelected = new EventEmitter<GoodsInfo>();
 
   public onCardClick() {
-    this.onCardSelected.emit(this.goodsInfo)
+    this.onCardSelected.emit(this.getGoodsInfo())
+  }
+
+  public getGoodsInfo(): GoodsInfo {
+    if (this.goodsInfo) return this.goodsInfo;
+    return DEFAULT_GOODS_PLACEHOLDER;
   }
 }

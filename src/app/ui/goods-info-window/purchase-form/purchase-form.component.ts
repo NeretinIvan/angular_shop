@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { AfterContentInit, Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GoodsInfo } from 'src/app/domain';
 
@@ -8,7 +8,7 @@ import { GoodsInfo } from 'src/app/domain';
   templateUrl: './purchase-form.component.html',
   styleUrls: ['./purchase-form.component.scss']
 })
-export class PurchaseFormComponent {
+export class PurchaseFormComponent implements AfterContentInit {
   @Input()
   public goodsSelected: GoodsInfo | null = null;
   
@@ -22,7 +22,10 @@ export class PurchaseFormComponent {
   })
 
   public onFormSubmit(): void {
-    this.purchaseForm.controls["goods"].setValue(this.goodsSelected);
     console.log(this.purchaseForm.value)
+  }
+
+  public ngAfterContentInit(): void {
+    this.purchaseForm.controls["goods"].setValue(this.goodsSelected);
   }
 }
