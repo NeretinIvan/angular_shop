@@ -14,7 +14,6 @@ export class GoodsInfoLoaderService {
 
   constructor(private httpClient: HttpClient,
               @Inject(API_SERVER_PATH) private apiServerPath: string) {
-                //this.test();
   }
 
   public async getGoodsInfos(amount: number = this.DEFAULT_GOODS_INFO_LOADINGS): Promise<(GoodsInfo)[]> {    
@@ -24,17 +23,16 @@ export class GoodsInfoLoaderService {
       loadings[i] = this.read(i + this.alreadyLoaded);
     }
 
-    return Promise.allSettled(loadings).then((results: PromiseSettledResult<any>[]) => {
-      const goodsInfosLoaded = results.filter(isFulfilled).map(element => element.value);
-      console.log(goodsInfosLoaded);
-      this.alreadyLoaded += goodsInfosLoaded.length;
+    const results: PromiseSettledResult<any>[] = await Promise.allSettled(loadings);
+    const goodsInfosLoaded = results.filter(isFulfilled).map(element => element.value);
+    this.alreadyLoaded += goodsInfosLoaded.length;
 
-      //lag imitation
-      return new Promise<(GoodsInfo)[]>((resolve, reject) => {
-        setTimeout(() => {
-          resolve(goodsInfosLoaded);
-        }, 1000)
-      });
+    return new Promise<GoodsInfo[]>((resolve, reject) => {
+      if (goodsInfosLoaded.length === 0) {
+        reject("no more goods in storage");
+      } else {
+        resolve(goodsInfosLoaded); 
+      }
     })
   }
 

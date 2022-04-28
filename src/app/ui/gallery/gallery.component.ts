@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { GoodsInfo, DEFAULT_GOODS_PLACEHOLDER } from 'src/app/domain';
 import { GoodsInfoLoaderService } from './goods-info-loader.service';
 
@@ -11,11 +12,14 @@ export class GalleryComponent implements AfterViewInit {
   public goods: (GoodsInfo | null)[] = [];
   public isGoodsInfoWindowShown: boolean = false;
   public selectedGoods: GoodsInfo | null = null;
+  public isDataLoadingStopped: boolean = false;
 
   private gallery: HTMLElement | null = null;
-  private isDataLoading: boolean = false;
+  private isDataLoadingNow: boolean = false;
+  
   private readonly GOODS_PER_LOAD = 2;
   private readonly SCROLL_LOADING_GAP = 100;
+  private readonly CHECK_UPDATES_FREQUENCY = 1000;
 
   constructor(private goodsLoader: GoodsInfoLoaderService,
               private element: ElementRef<HTMLElement>) {
@@ -51,34 +55,53 @@ export class GalleryComponent implements AfterViewInit {
     }, 0);
   }
 
-  private async onScroll() {
-    if (!this.gallery) return;
+  public onLoadMoreButtonClick() {
+    this.isDataLoadingStopped = false;
+    this.onScroll();
+  }
 
-    if (this.isCameraTouchedBottom()) {
-      await this.loadAdditionalGoodsCards(this.GOODS_PER_LOAD);
-      this.onScroll();
+  private async onScroll() {
+    if (this.isCameraTouchesBottom()) {
+      this.loadNewData().then(() => {
+        this.onScroll();
+      })
+      .catch((reason: string) => { 
+        console.log(reason) 
+      });
     }
   }
 
-  private isCameraTouchedBottom(): boolean {
+  private async loadNewData() {
+    if (this.isDataLoadingStopped) return new Promise((resolve, reject) => reject("loading stopped now"));
+
+    const previousDataLoading = this.waitForPreviousDataLoading();
+    await previousDataLoading;
+    this.isDataLoadingNow = true;
+    await this.loadAdditionalGoodsCards(this.GOODS_PER_LOAD);
+    this.isDataLoadingNow = false;
+    Promise.resolve(previousDataLoading);
+  }
+
+  private isCameraTouchesBottom(): boolean {
     if (!this.gallery) return false;
 
     return (this.gallery.offsetHeight + this.gallery.offsetTop <= window.scrollY + window.innerHeight + this.SCROLL_LOADING_GAP);
   }
 
   async loadAdditionalGoodsCards(amount: number): Promise<void> {
-    const previousDataLoading = this.waitForPreviousDataLoading();
-    await previousDataLoading;
     return new Promise<void>((resolve, reject) => {
-      this.isDataLoading = true;
       this.goods = new Array(...this.goods, ...new Array(amount).fill(null));
-      this.goodsLoader.getGoodsInfos(this.GOODS_PER_LOAD).then((value: (GoodsInfo | null)[]) => {
+
+      this.goodsLoader.getGoodsInfos(this.GOODS_PER_LOAD)
+      .then((value: (GoodsInfo)[]) => {
         this.goods = new Array(...getArrayWithoutNulls(this.goods), ...value, ...getNullsFromArray(removeNullsFromArray(this.goods, amount)));
         resolve();
+      }).catch((reason: string) => {
+        console.log(reason);
+        this.isDataLoadingStopped = true;
+        this.goods = getArrayWithoutNulls(this.goods);
+        resolve();
       })
-    }).then(() => {
-      this.isDataLoading = false;
-      Promise.resolve(previousDataLoading);
     })
   }
 
@@ -88,7 +111,7 @@ export class GalleryComponent implements AfterViewInit {
       resolveDataLoading = resolve;
     })
 
-    if (!this.isDataLoading) {
+    if (!this.isDataLoadingNow) {
       resolveDataLoading();
     } 
     else {
@@ -98,7 +121,7 @@ export class GalleryComponent implements AfterViewInit {
   }
 }
 
-function removeNullsFromArray<T>(array: Array<T | null>, amount: number): Array<T | null> {
+function removeNullsFromArray<T>(array: Array<T | null>, amount: number = array.length): Array<T | null> {
   let count = 0;
   return array.filter((value: T | null) => {
     if (value === null) count++;
@@ -111,6 +134,5 @@ function getNullsFromArray<T>(array: Array<T | null>): Array<T | null> {
 }
 
 function getArrayWithoutNulls<T>(array: Array<T | null>): Array<T | null> {
-  
   return array.filter((value: T | null) => value !== null);
 }

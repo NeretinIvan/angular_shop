@@ -9,6 +9,13 @@
     </div>
 </div>
 
+<button 
+    *ngIf="isDataLoadingStopped" 
+    class="loadMoreButton"
+    (click)="onLoadMoreButtonClick()">
+    Загрузить еще
+</button>
+
 <app-goods-info-window 
     *ngIf="isGoodsInfoWindowShown"
     (infoWindowClosed)="hideGoodsInfoWindow()"
