@@ -1,0 +1,5 @@
+<ya-map [center]="[55.751952, 37.600739]" [zoom]="9">
+    <div *ngFor="let marker of markers; index as i">
+        <ya-placemark [geometry]="[marker.coordinates.latitude, marker.coordinates.longitude]" (yaclick)="onMarkerClick(marker)"></ya-placemark>
+    </div>
+</ya-map>

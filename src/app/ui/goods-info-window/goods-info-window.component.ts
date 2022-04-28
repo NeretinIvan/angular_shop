@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DEFAULT_GOODS_PLACEHOLDER, GoodsInfo } from 'src/app/domain';
+import { DEFAULT_GOODS_PLACEHOLDER, GoodsInfo, StreetAddress } from 'src/app/domain';
 
 @Component({
   selector: 'app-goods-info-window',
@@ -29,5 +29,10 @@ export class GoodsInfoWindowComponent {
 
   public hidePurchaseForm(): void {
     this.isPurchaseFormShown = false;
+  }
+
+  public getAddresses(): StreetAddress[] {
+    if (this.goodsInfo.addresses) return this.goodsInfo.addresses;
+    return [];
   }
 }

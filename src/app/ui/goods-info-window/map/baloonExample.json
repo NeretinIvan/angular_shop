@@ -1,0 +1,22 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature", 
+            "id": 0, 
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [55.831903, 37.411961]
+            },
+            "properties": {
+                "balloonContentHeader": "<font size=3><b><a target='_blank' href='https://yandex.com'>Your link can be here</a></b></font>", 
+                "balloonContentBody": "<p>Your name: <input name='login'></p><p><em>The phone in the format 2xxx-xxx:</em>  <input></p><p><input type='submit' value='Send'></p>", 
+                "balloonContentFooter": "<font size=1>Information is provided by: </font> <strong>this balloon</strong>", 
+                "clusterCaption": "<strong><s>Another</s> one</strong> placemark", 
+                "hintContent": "<strong>Text of the  <s>hint</s></strong>"
+            }
+        }
+    ]
+}
+
+

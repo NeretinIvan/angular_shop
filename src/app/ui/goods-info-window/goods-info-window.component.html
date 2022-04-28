@@ -4,6 +4,9 @@
             <p>{{goodsInfo.name}}</p>
             <p>{{goodsInfo.price}}</p>
             <button (click)="showPurchaseForm()">show form</button>
+            <div class="map">
+                <app-map [markers]="getAddresses()"></app-map>
+            </div>
         </div>
         <app-purchase-form 
             *ngIf="isPurchaseFormShown"

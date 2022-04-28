@@ -12,9 +12,12 @@ const generateRandomData = (amount) => {
     let goodsLoaded = new Array(amount);
 
     for (let i = 0; i < goodsLoaded.length; i++) {
-      const addresses = new Array(getRandomInt(1, 5)).fill({
-        address: "some address",
-        coordinates: {latitude: 1, longitude: 2}
+      const addresses = new Array(getRandomInt(1, 5)).fill({}).map((value) => {
+        value = {
+          address: "some address",
+          coordinates: getRandomCoordinatesFromMoscow()
+        }
+        return value;
       });
 
       goodsLoaded[i] = {
@@ -32,4 +35,20 @@ function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+}
+
+const MOSCOW_COORDINATES = {
+  begin: {longitude: 37.428645, latitude: 55.876448},
+  end: {longitude: 37.835122, latitude: 55.653490}
+}
+
+function getRandomCoordinatesFromMoscow() {
+  return {
+      longitude: getRandomArbitrary(MOSCOW_COORDINATES.begin.longitude, MOSCOW_COORDINATES.end.longitude),
+      latitude: getRandomArbitrary(MOSCOW_COORDINATES.begin.latitude, MOSCOW_COORDINATES.end.latitude)
+  }
+}
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
 }
