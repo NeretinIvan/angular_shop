@@ -1,6 +1,6 @@
 module.exports = () => {
     const data = { goodsInfos: [] }
-    const randomData = generateRandomData(3);
+    const randomData = generateRandomData(15);
 
     for (let i = 0; i < randomData.length; i++) {
       data.goodsInfos.push({ id: i, goodsInfo: randomData[i] })

@@ -111,5 +111,6 @@ function getNullsFromArray<T>(array: Array<T | null>): Array<T | null> {
 }
 
 function getArrayWithoutNulls<T>(array: Array<T | null>): Array<T | null> {
+  
   return array.filter((value: T | null) => value !== null);
 }

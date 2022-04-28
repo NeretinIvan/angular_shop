@@ -3,36 +3,38 @@ import { HttpClient } from "@angular/common/http"
 import { firstValueFrom } from 'rxjs';
 import { DEFAULT_GOODS_PLACEHOLDER, GoodsInfo, StreetAddress } from 'src/app/domain';
 import { API_SERVER_PATH } from 'src/app/domain/tokens';
+import { isFulfilled, isRejected } from 'src/app/lib';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoodsInfoLoaderService {
   private DEFAULT_GOODS_INFO_LOADINGS: number = 10;
+  private alreadyLoaded: number = 0;
 
   constructor(private httpClient: HttpClient,
               @Inject(API_SERVER_PATH) private apiServerPath: string) {
+                //this.test();
   }
 
-  public async getGoodsInfos(amount: number = this.DEFAULT_GOODS_INFO_LOADINGS): Promise<(GoodsInfo | null)[]> {
-    let goodsInfosLoaded = new Array<GoodsInfo | null>(amount);
-    const loadings = new Array<Promise<void>>(amount);
+  public async getGoodsInfos(amount: number = this.DEFAULT_GOODS_INFO_LOADINGS): Promise<(GoodsInfo)[]> {    
+    const loadings = new Array<Promise<GoodsInfo>>(amount);
 
     for (let i = 0; i < amount; i++) {
-      loadings[i] = this.read(i).then((value: GoodsInfo) => {
-        goodsInfosLoaded[i] = value;
-      }).catch((error: string) => {
-        goodsInfosLoaded[i] = null;
-      });
+      loadings[i] = this.read(i + this.alreadyLoaded);
     }
 
-    await Promise.allSettled(loadings);
+    return Promise.allSettled(loadings).then((results: PromiseSettledResult<any>[]) => {
+      const goodsInfosLoaded = results.filter(isFulfilled).map(element => element.value);
+      console.log(goodsInfosLoaded);
+      this.alreadyLoaded += goodsInfosLoaded.length;
 
-    //lag imitation
-    return new Promise<(GoodsInfo | null)[]>((resolve, reject) => {
-      setTimeout(() => {
-        resolve(goodsInfosLoaded);
-      }, 1000)
+      //lag imitation
+      return new Promise<(GoodsInfo)[]>((resolve, reject) => {
+        setTimeout(() => {
+          resolve(goodsInfosLoaded);
+        }, 1000)
+      });
     })
   }
 
@@ -59,4 +61,37 @@ export class GoodsInfoLoaderService {
   public delete(id: number): Promise<unknown> {
     return firstValueFrom(this.httpClient.delete<GoodsInfo>(`${ this.apiServerPath }/goodsInfos/${ id }`))
   }
+
+
+
+
+
+
+
+
+
+  private async test() {
+    
+
+
+    const data = new Array(16);
+    for (let i = 0; i < data.length; i++) {
+      data[i] = this.read(i);
+    }
+
+    Promise.allSettled(data).then((result: PromiseSettledResult<any>[]) => {
+      
+      for (let item of result) {
+        if (isFulfilled(item)) {
+          console.log(item.value);
+        }
+      }
+
+      for (let item of result) {
+        console.log(item.status)
+      }
+    })
+  }
 }
+
+
