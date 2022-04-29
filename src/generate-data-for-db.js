@@ -1,5 +1,5 @@
 module.exports = () => {
-    const data = { goodsInfos: [] }
+    const data = { goodsInfos: [], purchaseRequests: [] }
     const randomData = generateRandomData(15);
 
     for (let i = 0; i < randomData.length; i++) {
@@ -12,9 +12,9 @@ const generateRandomData = (amount) => {
     let goodsLoaded = new Array(amount);
 
     for (let i = 0; i < goodsLoaded.length; i++) {
-      const addresses = new Array(getRandomInt(1, 5)).fill({}).map((value) => {
+      const addresses = new Array(getRandomInt(1, 5)).fill({}).map((value, index) => {
         value = {
-          address: "some address",
+          address: `some address ${i}-${index}`,
           coordinates: getRandomCoordinatesFromMoscow()
         }
         return value;

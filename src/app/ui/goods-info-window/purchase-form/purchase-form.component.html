@@ -1,23 +1,25 @@
 <div class="layout">
+    <span>Выбранный адрес: {{getSelectedAddress().address}}</span>
+
     <form [formGroup]="purchaseForm">
 
         <div class="field">
-            <label for="firstName" class="required">First name</label>
+            <label for="firstName" class="required">Имя</label>
             <input id="firstName" type="text" formControlName="firstName">
         </div>
     
         <div class="field">
-            <label for="lastName" class="required">Last name</label>
+            <label for="lastName" class="required">Фамилия</label>
             <input id="lastName" type="text" formControlName="lastName">
         </div>
     
         <div class="field">
-            <label for="patronymic">Patronymic (if exist)</label>
+            <label for="patronymic">Отчестиво (если есть)</label>
             <input id="patronymic" type="text" formControlName="patronymic">
         </div>
         
         <div class="field">
-            <label for="phoneNumber" class="required">Phone number</label>
+            <label for="phoneNumber" class="required">Номер телефона</label>
             <input id="phoneNumber" type="number" formControlName="phoneNumber">
         </div>
     
@@ -25,10 +27,6 @@
             <label for="email" class="required">Email</label>
             <input id="email" type="text" formControlName="email">
         </div>
-    
-        <app-selected-goods-form-container formControlName="goods"></app-selected-goods-form-container>
-    
-        
     </form>
     <div class="button-container">
         <button (click)="onFormSubmit()" class="submit-button">Submit</button>

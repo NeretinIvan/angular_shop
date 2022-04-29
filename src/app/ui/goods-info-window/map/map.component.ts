@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { StreetAddress } from 'src/app/domain';
 
 @Component({
@@ -10,7 +10,10 @@ export class MapComponent {
   @Input()
   public markers: StreetAddress[] = [];
 
-  public onMarkerClick(e: any) {
-    console.log(this.markers);
+  @Output()
+  public onMarkerSelected = new EventEmitter<StreetAddress>();
+
+  public onMarkerClick(e: StreetAddress) {
+    this.onMarkerSelected.emit(e);
   }
 }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoodsInfoWindowComponent } from './goods-info-window.component';
 import { PurchaseFormComponent } from './purchase-form/purchase-form.component';
-import { SelectedGoodsFormContainerModule } from './purchase-form/selected-goods-form-container/selected-goods-form-container.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { MapComponent } from './map/map.component';
@@ -19,7 +18,6 @@ import { MapComponent } from './map/map.component';
   ],
   imports: [
     CommonModule,
-    SelectedGoodsFormContainerModule,
     FormsModule, 
     ReactiveFormsModule,
     AngularYandexMapsModule

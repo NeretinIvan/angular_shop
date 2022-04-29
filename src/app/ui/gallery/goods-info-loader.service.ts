@@ -59,37 +59,6 @@ export class GoodsInfoLoaderService {
   public delete(id: number): Promise<unknown> {
     return firstValueFrom(this.httpClient.delete<GoodsInfo>(`${ this.apiServerPath }/goodsInfos/${ id }`))
   }
-
-
-
-
-
-
-
-
-
-  private async test() {
-    
-
-
-    const data = new Array(16);
-    for (let i = 0; i < data.length; i++) {
-      data[i] = this.read(i);
-    }
-
-    Promise.allSettled(data).then((result: PromiseSettledResult<any>[]) => {
-      
-      for (let item of result) {
-        if (isFulfilled(item)) {
-          console.log(item.value);
-        }
-      }
-
-      for (let item of result) {
-        console.log(item.status)
-      }
-    })
-  }
 }
 
 

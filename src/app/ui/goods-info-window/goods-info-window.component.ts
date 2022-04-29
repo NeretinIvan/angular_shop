@@ -14,6 +14,7 @@ export class GoodsInfoWindowComponent {
   public infoWindowClosed = new EventEmitter();
 
   public isPurchaseFormShown: boolean = false;
+  public addressSelected: StreetAddress | null = null;
 
   public onBackgroundClick(e: Event): void {
     this.infoWindowClosed.emit();
@@ -21,6 +22,11 @@ export class GoodsInfoWindowComponent {
 
   public onWindowClick(e: Event): void {
     e.stopPropagation();
+  }
+
+  public onMapAddressSelected(e: StreetAddress) {
+    this.addressSelected = e;
+    this.isPurchaseFormShown = true;
   }
 
   public showPurchaseForm(): void {

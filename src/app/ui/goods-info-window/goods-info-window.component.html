@@ -5,12 +5,16 @@
             <p>{{goodsInfo.price}}</p>
             <button (click)="showPurchaseForm()">show form</button>
             <div class="map">
-                <app-map [markers]="getAddresses()"></app-map>
+                <app-map 
+                    [markers]="getAddresses()"
+                    (onMarkerSelected)="onMapAddressSelected($event)">
+                </app-map>
             </div>
         </div>
         <app-purchase-form 
             *ngIf="isPurchaseFormShown"
-            [goodsSelected]="goodsInfo">
+            [goodsSelected]="goodsInfo"
+            [addressSelected]="addressSelected">
         </app-purchase-form>
     </div>
 </div>
