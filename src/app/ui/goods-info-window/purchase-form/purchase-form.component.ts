@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GoodsInfo, StreetAddress } from 'src/app/domain';
+import { DEFAULT_GOODS_PLACEHOLDER, GoodsInfo, StreetAddress } from 'src/app/domain';
 import { PurchaseRequestSenderService } from './purchase-request-sender.service';
 
 @Component({
@@ -60,6 +60,11 @@ export class PurchaseFormComponent implements AfterContentInit {
         longitude: 0
       }
     }
+  }
+
+  public getSelectedGoods(): GoodsInfo {
+    if (this.goodsSelected) return this.goodsSelected;
+    return DEFAULT_GOODS_PLACEHOLDER;
   }
 
   public onBackButton(): void {

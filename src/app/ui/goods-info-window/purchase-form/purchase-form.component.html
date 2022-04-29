@@ -1,44 +1,55 @@
 <div class="layout">
-    <span>Выбранный адрес: {{getSelectedAddress().address}}</span>
-
-    <div class="map">
-        <app-map 
-            [markers]="[getSelectedAddress()]" 
-            [center]="getSelectedAddress().coordinates"
-            [lockControls]="true">
-        </app-map>
-    </div>
-
-    <form [formGroup]="purchaseForm">
-
-        <div class="field">
-            <label for="firstName" class="required">Имя</label>
-            <input id="firstName" type="text" formControlName="firstName">
-        </div>
-    
-        <div class="field">
-            <label for="lastName" class="required">Фамилия</label>
-            <input id="lastName" type="text" formControlName="lastName">
-        </div>
-    
-        <div class="field">
-            <label for="patronymic">Отчестиво (если есть)</label>
-            <input id="patronymic" type="text" formControlName="patronymic">
+    <div class="scroll-section">
+        <div class="information">
+            <h1 class="title">Товар: </h1>
+            <div class="goods-container">
+                <span class="goods-name">{{getSelectedGoods().name}}</span>
+                <span class="price">{{getSelectedGoods().price | price: "RUB"}}</span>
+            </div>
+        
+            <h1 class="title">Выбранный адрес: </h1>
+            <p class="common-text">{{getSelectedAddress().address}}</p>
         </div>
         
-        <div class="field">
-            <label for="phoneNumber" class="required">Номер телефона</label>
-            <input id="phoneNumber" type="number" formControlName="phoneNumber">
+        <div class="map">
+            <app-map 
+                [markers]="[getSelectedAddress()]" 
+                [center]="getSelectedAddress().coordinates"
+                [lockControls]="true">
+            </app-map>
         </div>
     
-        <div class="field">
-            <label for="email" class="required">Email</label>
-            <input id="email" type="text" formControlName="email">
+        <form [formGroup]="purchaseForm">
+            <div class="field">
+                <label for="firstName" class="required">Имя</label>
+                <input id="firstName" type="text" formControlName="firstName">
+            </div>
+        
+            <div class="field">
+                <label for="lastName" class="required">Фамилия</label>
+                <input id="lastName" type="text" formControlName="lastName">
+            </div>
+        
+            <div class="field">
+                <label for="patronymic">Отчестиво (если есть)</label>
+                <input id="patronymic" type="text" formControlName="patronymic">
+            </div>
+            
+            <div class="field">
+                <label for="phoneNumber" class="required">Номер телефона</label>
+                <input id="phoneNumber" type="number" formControlName="phoneNumber">
+            </div>
+        
+            <div class="field">
+                <label for="email" class="required">Email</label>
+                <input id="email" type="text" formControlName="email">
+            </div>
+        </form>
+        <div class="button-container">
+            <button (click)="onFormSubmit()" class="submit-button">Отправить</button>
+            <button (click)="onBackButton()">Назад</button>
         </div>
-    </form>
-    <div class="button-container">
-        <button (click)="onFormSubmit()" class="submit-button">Отправить</button>
-        <button (click)="onBackButton()">Назад</button>
     </div>
+    
 </div>
 
