@@ -1,5 +1,7 @@
 <div class="layout" (click)="onCardClick()" [class.not-loaded]="goodsInfo === null">
-    <div class="preview-image" [ngStyle]="{ 'background-image': 'url(' + getGoodsInfo().image + ')'}"></div>
+    <div class="image-container">
+        <div class="preview-image" [ngStyle]="{ 'background-image': 'url(' + getGoodsInfo().image + ')'}"></div>
+    </div>
     <div class="description">
         <p class="name">{{getGoodsInfo().name | shortenName: 30}}</p>
         <p class="price">{{getGoodsInfo().price | price: "RUB"}}</p>

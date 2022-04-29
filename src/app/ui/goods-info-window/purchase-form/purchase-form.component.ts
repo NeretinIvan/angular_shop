@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, Input } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GoodsInfo, StreetAddress } from 'src/app/domain';
 import { PurchaseRequestSenderService } from './purchase-request-sender.service';
@@ -15,6 +15,9 @@ export class PurchaseFormComponent implements AfterContentInit {
   @Input()
   public addressSelected: StreetAddress | null = null;
   
+  @Output()
+  public formCancelled = new EventEmitter<void>();
+
   public purchaseForm = new FormGroup({
     firstName: new FormControl("", Validators.required),
     lastName: new FormControl("", Validators.required),
@@ -57,5 +60,9 @@ export class PurchaseFormComponent implements AfterContentInit {
         longitude: 0
       }
     }
+  }
+
+  public onBackButton(): void {
+    this.formCancelled.emit();
   }
 }

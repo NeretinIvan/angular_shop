@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DEFAULT_GOODS_PLACEHOLDER, GoodsInfo, StreetAddress } from 'src/app/domain';
 
 @Component({
@@ -16,8 +16,12 @@ export class GoodsInfoWindowComponent {
   public isPurchaseFormShown: boolean = false;
   public addressSelected: StreetAddress | null = null;
 
-  public onBackgroundClick(e: Event): void {
+  public closeWindow(): void {
     this.infoWindowClosed.emit();
+  }
+
+  public onBackgroundScroll(e: Event): void {
+    e.stopPropagation();
   }
 
   public onWindowClick(e: Event): void {
@@ -40,5 +44,10 @@ export class GoodsInfoWindowComponent {
   public getAddresses(): StreetAddress[] {
     if (this.goodsInfo.addresses) return this.goodsInfo.addresses;
     return [];
+  }
+
+  public getDescription(): string {
+    if (this.goodsInfo.description) return this.goodsInfo.description;
+    return "Описание отсутствует"
   }
 }

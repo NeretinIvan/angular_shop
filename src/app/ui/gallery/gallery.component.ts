@@ -49,7 +49,7 @@ export class GalleryComponent implements AfterViewInit {
     document.addEventListener("scroll", () => {
       this.onScroll();
     });
-
+    
     setTimeout(() => {
       this.onScroll();
     }, 0);
@@ -60,7 +60,11 @@ export class GalleryComponent implements AfterViewInit {
     this.onScroll();
   }
 
-  private async onScroll() {
+  public onGalleryScrolled() {
+    console.log("scroll");
+  }
+
+  public async onScroll() {
     if (this.isCameraTouchesBottom()) {
       this.loadNewData().then(() => {
         this.onScroll();

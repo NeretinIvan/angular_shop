@@ -1,20 +1,40 @@
-<div class="background" (click)="onBackgroundClick($event)">
+<div class="background" id="background" (click)="closeWindow()" (scroll)="onBackgroundScroll($event)">
     <div class="window" (click)="onWindowClick($event)">
         <div *ngIf="isPurchaseFormShown === false">
-            <p>{{goodsInfo.name}}</p>
-            <p>{{goodsInfo.price}}</p>
-            <button (click)="showPurchaseForm()">show form</button>
-            <div class="map">
-                <app-map 
-                    [markers]="getAddresses()"
-                    (onMarkerSelected)="onMapAddressSelected($event)">
-                </app-map>
+            <div class="layout">
+                <div class="main-info">
+                    <img src={{goodsInfo.image}} alt="Изображение товара" class="goods-image">
+                    <div class="name-section">
+                        <h1 class="goods-name">{{goodsInfo.name}}</h1>
+                        <p class="price">{{goodsInfo.price | price: "RUB"}}</p>
+                    </div>
+                </div>
+                <div class="description-section">
+                    <h2 class="title">Описание:</h2>
+                    <p class="description common-text">{{getDescription()}}</p>
+
+                    <h2 class="title">Пункты выдачи:</h2>
+                    <ul *ngFor="let address of goodsInfo.addresses">
+                        <li class="address common-text">{{address.address}}</li>
+                    </ul>
+
+                    <h2 class="title">Выберите пункт выдачи:</h2>
+                </div>
+                
+                <div class="map">
+                    <app-map 
+                        [markers]="getAddresses()"
+                        (onMarkerSelected)="onMapAddressSelected($event)">
+                    </app-map>
+                </div>          
             </div>
         </div>
         <app-purchase-form 
             *ngIf="isPurchaseFormShown"
             [goodsSelected]="goodsInfo"
-            [addressSelected]="addressSelected">
+            [addressSelected]="addressSelected"
+            (formCancelled)="hidePurchaseForm()">
         </app-purchase-form>
     </div>
+    <button *ngIf="isPurchaseFormShown === false" class="back-button" (click)="closeWindow()"></button>
 </div>

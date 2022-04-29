@@ -5,6 +5,7 @@ import { PurchaseFormComponent } from './purchase-form/purchase-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { MapComponent } from './map/map.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MapComponent } from './map/map.component';
     CommonModule,
     FormsModule, 
     ReactiveFormsModule,
-    AngularYandexMapsModule
+    AngularYandexMapsModule,
+    SharedModule
   ]
 })
 export class GoodsInfoWindowModule { }

@@ -1,4 +1,8 @@
-<ya-map [center]="[55.751952, 37.600739]" [zoom]="9">
+<ya-map 
+    [center]="[center.latitude, center.longitude]" 
+    [zoom]="9" 
+    [options]="mapOptions"
+    [state]="mapState">
     <div *ngFor="let marker of markers; index as i">
         <ya-placemark 
             [geometry]="[marker.coordinates.latitude, marker.coordinates.longitude]" 

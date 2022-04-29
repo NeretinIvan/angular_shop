@@ -24,6 +24,7 @@ export class GoodsInfoLoaderService {
     }
 
     const results: PromiseSettledResult<any>[] = await Promise.allSettled(loadings);
+
     const goodsInfosLoaded = results.filter(isFulfilled).map(element => element.value);
     this.alreadyLoaded += goodsInfosLoaded.length;
 

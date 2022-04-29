@@ -1,6 +1,14 @@
 <div class="layout">
     <span>Выбранный адрес: {{getSelectedAddress().address}}</span>
 
+    <div class="map">
+        <app-map 
+            [markers]="[getSelectedAddress()]" 
+            [center]="getSelectedAddress().coordinates"
+            [lockControls]="true">
+        </app-map>
+    </div>
+
     <form [formGroup]="purchaseForm">
 
         <div class="field">
@@ -29,8 +37,8 @@
         </div>
     </form>
     <div class="button-container">
-        <button (click)="onFormSubmit()" class="submit-button">Submit</button>
-        <button>Back</button>
+        <button (click)="onFormSubmit()" class="submit-button">Отправить</button>
+        <button (click)="onBackButton()">Назад</button>
     </div>
 </div>
 

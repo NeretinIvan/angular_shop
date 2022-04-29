@@ -1,15 +1,24 @@
 .preview-image {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: white;
+    background-size: contain;
+    width: 80%;
+    height: 80%;
+    padding: 0;
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     box-sizing: border-box;
     height: 14rem;
     width: 14rem;
     border-radius: 20px 20px 0 0;
     border: 1px solid lightgray;
-
-    //background-image: url(/assets/images/cat.jpg);
-
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: white;
 }
 
 .layout {
@@ -33,6 +42,14 @@
 
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.image-container:hover {
+    cursor: pointer;
+}
+
+.description:hover {
+    cursor: pointer;
 }
 
 .name {
@@ -71,5 +88,9 @@
         background-position: center;
         background-color: white;
         background-size: 2rem;
+    }
+
+    .layout:hover {
+        cursor: default;
     }
 }

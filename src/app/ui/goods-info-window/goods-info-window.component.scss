@@ -9,15 +9,8 @@
     width: 100%;
     height: 100%;
     z-index: 100;
-}
 
-.map {
-    //display: flex;
-    //flex-direction: column;
-    //flex-grow: 1;
-    width: 100%;
-    min-height: 300px;
-    height: 300px;
+    overflow-y: hidden;
 }
 
 .window {
@@ -25,18 +18,111 @@
     left: 0;
     background-color: white;
     z-index: 110;
-    margin: 5rem auto;
-    padding: 1rem;
-    min-width: 350px;
-    height: 70%;
+    margin: auto;
+    padding: 2rem;
+    width: 75%;
+    height: 85%;
     border-radius: 20px;
+
+    overflow-y: auto;
 }
 
-@media only screen and (max-device-width: 480px) {
+.layout {
+    width: 100%;
+    height: 100%;
+}
+
+.main-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5%;
+    margin: 15px;
+
+    .goods-image {
+        width: 50%;
+        height: 25vw;
+        object-fit: contain;
+    }
+    
+    .goods-name {
+        font-size: 7vmin;
+    }
+
+    .price {
+        margin-top: 5vw;
+        margin-bottom: 1.5rem;
+        text-align: right;
+        font-size: 2.5rem;
+        font-weight: bold;    
+    }
+}
+
+.description-section {
+    margin-top: 5vw;
+
+    .title {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-size: 2rem;
+    }
+
+    .common-text {
+        font-size: 1.1rem;
+        line-height: 1.5rem;
+    }
+
+    li {
+        margin-left: 20px;
+    }
+}
+
+.map {
+    margin-top: 30px;
+    width: 100%;
+    height: 450px;
+}
+
+.back-button {
+    display: none;
+}
+
+@media only screen and (max-device-width: 550px) {
     .window {
         margin: 5rem auto 0 auto;
         border-radius: 20px 20px 0 0;
         width: 100%;
+        padding: 1rem 0 0 0;
+    }
+
+    .description-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .main-info {
+        margin: 15px 15px 15px 0;
+    }
+
+    .back-button {
+        display: block;
+        
+        position: fixed;
+        width: 75px;
+        height: 75px;
+        border: none;
+        border-radius: 50px;
+        
+        background-color: white;
+        background-image: url("/assets/icons/back-arrow.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 2rem;
+    
+        bottom: 10px;
+        right: 10px;
+        z-index: 120;
     }
 }
 
