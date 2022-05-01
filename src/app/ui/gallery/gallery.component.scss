@@ -33,4 +33,28 @@
     border: none;
     border-radius: 2rem;
     margin: 50px auto 150px auto;
+    font-size: 1.2rem;
+
+    cursor: pointer;
+}
+
+@media only screen and (max-device-width: 800px) {
+    .gallery {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media only screen and (max-device-width: 650px) {
+    .gallery {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-device-width: 400px) {
+    .gallery {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }

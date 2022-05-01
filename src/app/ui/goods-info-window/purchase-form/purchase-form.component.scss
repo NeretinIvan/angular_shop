@@ -11,20 +11,29 @@
         text-align: right;
         justify-content: center;
         margin-right: 20px;
-        width: 18%;
+        width: 22%;
+    }
+
+    & .input-container {
+        width: 55%;
+        max-width: 300px;
     }
 
     & input {
-        width: 55%;
-        max-width: 300px;
-        height: 2rem;
         font-size: 1.15rem;
+        height: 2.3rem;
+        width: 100%;
         background-color: lightgray;
         border: none;
         border-radius: 15px;
         padding: 5px;
+
+        &.invalid {
+            border: 1px solid red;
+        }
     }
 }
+
 
 .required ::after {
     content: "*";
@@ -50,7 +59,11 @@ button {
     margin: 10px auto;
 
     &.submit-button {
-        background-color: white;
+        background-color: white;  
+        
+        &[disabled] {
+            cursor: not-allowed;
+        }
     };
 }
 
@@ -120,6 +133,15 @@ form {
 .scroll-section {
     height: auto;
     overflow-y: auto;
+}
+
+.field-required-hint {
+    position: relative;
+    bottom: -1px;
+    left: 0;
+    height: 0;
+    font-size: 0.9rem;
+    color: red;
 }
 
 @media only screen and (orientation: vertical) {

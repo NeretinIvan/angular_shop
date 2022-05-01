@@ -70,4 +70,8 @@ export class PurchaseFormComponent implements AfterContentInit {
   public onBackButton(): void {
     this.formCancelled.emit();
   }
+
+  public isFieldInvalidAndTouched(fieldName: string): boolean {
+    return this.purchaseForm.controls[fieldName].invalid && this.purchaseForm.controls[fieldName].touched;
+  }
 }

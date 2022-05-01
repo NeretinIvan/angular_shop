@@ -22,34 +22,58 @@
         <form [formGroup]="purchaseForm">
             <div class="field">
                 <label for="firstName" class="required">Имя</label>
-                <input id="firstName" type="text" formControlName="firstName">
+                <div class="input-container">
+                    <input id="firstName" type="text" formControlName="firstName" [class.invalid]="isFieldInvalidAndTouched('firstName')">
+                    <p *ngIf="isFieldInvalidAndTouched('firstName')" class="field-required-hint">
+                        Обязательное поле
+                    </p>
+                </div>
             </div>
-        
+            
             <div class="field">
                 <label for="lastName" class="required">Фамилия</label>
-                <input id="lastName" type="text" formControlName="lastName">
+                <div class="input-container">
+                    <input id="lastName" type="text" formControlName="lastName" [class.invalid]="isFieldInvalidAndTouched('lastName')">
+                    <p *ngIf="isFieldInvalidAndTouched('lastName')" class="field-required-hint">
+                        Обязательное поле
+                    </p>
+                </div>
             </div>
         
             <div class="field">
                 <label for="patronymic">Отчестиво (если есть)</label>
-                <input id="patronymic" type="text" formControlName="patronymic">
+                <div class="input-container">
+                    <input id="patronymic" type="text" formControlName="patronymic">
+                </div>
             </div>
             
             <div class="field">
                 <label for="phoneNumber" class="required">Номер телефона</label>
-                <input id="phoneNumber" type="number" formControlName="phoneNumber">
+                <div class="input-container">
+                    <input id="phoneNumber" type="number" formControlName="phoneNumber" [class.invalid]="isFieldInvalidAndTouched('phoneNumber')">
+                    <p *ngIf="isFieldInvalidAndTouched('phoneNumber')" class="field-required-hint">
+                        Некорректный номер телефона
+                    </p>
+                </div>
             </div>
         
             <div class="field">
                 <label for="email" class="required">Email</label>
-                <input id="email" type="text" formControlName="email">
+                <div class="input-container">
+                    <input id="email" type="text" formControlName="email" [class.invalid]="isFieldInvalidAndTouched('email')">
+                    <p *ngIf="isFieldInvalidAndTouched('email')" class="field-required-hint">
+                        Некорректный email
+                    </p>
+                </div>
             </div>
         </form>
         <div class="button-container">
-            <button (click)="onFormSubmit()" class="submit-button">Отправить</button>
+            <button 
+                (click)="onFormSubmit()" 
+                class="submit-button"
+                [disabled]="purchaseForm.invalid">Отправить</button>
             <button (click)="onBackButton()">Назад</button>
         </div>
     </div>
-    
 </div>
 

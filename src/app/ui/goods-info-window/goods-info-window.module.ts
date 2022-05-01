@@ -6,16 +6,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { MapComponent } from './map/map.component';
 import { SharedModule } from '../shared/shared.module';
+import { IfFieldInvalidDirective } from './purchase-form/if-field-invalid.directive';
 
 @NgModule({
   declarations: [
     GoodsInfoWindowComponent,
     PurchaseFormComponent,
-    MapComponent
+    MapComponent,
+    IfFieldInvalidDirective
   ],
   exports: [
     GoodsInfoWindowComponent,
-    MapComponent
+    MapComponent,
+    IfFieldInvalidDirective
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,94 @@
+.top-banner {
+    height: 300px;
+    width: 100%;
+    background-color: white;
+
+    .caption {
+        height: 100%;
+        padding: 0 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        text-align: center;
+    }
+}
+
+.top-panel {
+    position: sticky;
+    background-color: #cb99bd;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+
+    .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        padding: 0 20px;
+    }
+}
+
+.menu {
+    height: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    overflow-x: auto;
+}
+
+.menu-element {
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: hsla(0, 0, 0, 0);
+    font-size: 1.4rem;
+    border: none;
+    min-width: 80px;
+    cursor: pointer;
+}
+
+.menu-element:hover {
+    background-color: #75ff77;
+    color: black;
+}
+
+.logo {
+    margin-right: 15px;
+    font-size: 1.4rem;
+}
+
+@media only screen and (max-device-width: 550px) {
+    .top-banner {
+        height: 150px;
+        width: 100%;
+        background-color: white;
+    
+        .caption {
+            height: 100%;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            text-align: center;
+        }
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .menu-element {
+        font-size: 1.2rem;        
+    }
+
+    .top-panel {
+        .content {
+            padding: 0 10px;
+        }
+    }
+}
