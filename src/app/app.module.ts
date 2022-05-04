@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NotFoundPageComponent } from './ui/not-found-page/not-found-page.component';
 
-import { API_SERVER_PATH } from './domain/tokens';
+import { API_SERVER_PATH, SITE_URL } from './domain/tokens';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,12 @@ import { API_SERVER_PATH } from './domain/tokens';
   providers: [
     {
       provide: API_SERVER_PATH, 
-      useValue: "http://localhost:3000"}
+      useValue: "http://localhost:3000"
+    },
+    {
+      provide: SITE_URL,
+      useValue: "http://localhost:4200"
+    }
   ],
   bootstrap: [AppComponent]
 })

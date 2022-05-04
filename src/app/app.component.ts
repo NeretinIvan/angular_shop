@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { SITE_URL } from './domain/tokens';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'shop';
+  constructor(@Inject(SITE_URL) private siteUrl: string,
+              private router: Router) {
+  }
+
+  public onCatalogueClick() {
+    this.router.navigateByUrl("");
+  }
 }
