@@ -3,6 +3,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DEFAULT_GOODS_PLACEHOLDER, GoodsInfo, StreetAddress } from 'src/app/domain';
 import { PurchaseRequestSenderService } from './purchase-request-sender.service';
 
+type PurchaseResult = {
+  goods: GoodsInfo,
+  id: number
+}
+
 @Component({
   selector: 'app-purchase-form',
   templateUrl: './purchase-form.component.html',
@@ -17,6 +22,13 @@ export class PurchaseFormComponent implements AfterContentInit {
   
   @Output()
   public formCancelled = new EventEmitter<void>();
+
+  @Output()
+  public formClosed = new EventEmitter<void>();
+
+  public purchaseResult: PurchaseResult = { goods: DEFAULT_GOODS_PLACEHOLDER, id: -1 };
+  public isPurchaseComlete: boolean = false;
+  public isRequestLoading: boolean = false;
 
   public purchaseForm = new FormGroup({
     firstName: new FormControl("", Validators.required),
@@ -33,11 +45,14 @@ export class PurchaseFormComponent implements AfterContentInit {
 
   public onFormSubmit(): void {
     if (this.purchaseForm.valid) {
-      console.log(this.purchaseForm.value);
-      this.requestSender.create(this.purchaseForm.value).then(() => {
-        alert("Заказ выполнен успешно!")
+      this.isRequestLoading = true;
+      this.requestSender.create(this.purchaseForm.value).then((value: PurchaseResult) => {
+        this.purchaseResult = value;
+        this.isPurchaseComlete = true;
+        this.isRequestLoading = false;
       }).catch((reason: any) => {
         console.log(reason);
+        this.isRequestLoading = false;
         alert("Не удалось выполнить заказ :(");
       });
     }
@@ -69,6 +84,10 @@ export class PurchaseFormComponent implements AfterContentInit {
 
   public onBackButton(): void {
     this.formCancelled.emit();
+  }
+
+  public onCloseButton(): void {
+    this.formClosed.emit();
   }
 
   public isFieldInvalidAndTouched(fieldName: string): boolean {

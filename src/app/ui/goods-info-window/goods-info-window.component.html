@@ -33,7 +33,8 @@
             *ngIf="isPurchaseFormShown"
             [goodsSelected]="goodsInfo"
             [addressSelected]="addressSelected"
-            (formCancelled)="hidePurchaseForm()">
+            (formCancelled)="hidePurchaseForm()"
+            (formClosed)="closeWindow()">
         </app-purchase-form>
     </div>
     <button *ngIf="isPurchaseFormShown === false" class="back-button" (click)="closeWindow()"></button>

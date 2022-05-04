@@ -1,6 +1,6 @@
 <div class="layout">
     <div class="scroll-section">
-        <div class="information">
+        <div class="information" *ngIf="isPurchaseComlete === false">
             <h1 class="title">Товар: </h1>
             <div class="goods-container">
                 <span class="goods-name">{{getSelectedGoods().name}}</span>
@@ -11,6 +11,16 @@
             <p class="common-text">{{getSelectedAddress().address}}</p>
         </div>
         
+        <div class="information" *ngIf="isPurchaseComlete">
+            <p class="purchase-complete-caption">Заказ выполнен успешно!</p>
+            <div class="purchase-complete-info">
+                <p>Номер заказа: <span class="info-value">{{purchaseResult.id}}</span></p>
+                <p>Товар: <span class="info-value">{{getSelectedGoods().name}}</span></p>
+                <p>Адрес выдачи: <span class="info-value">{{getSelectedAddress().address}}</span></p>
+                <p>Сумма к оплате: <span class="info-value">{{getSelectedGoods().price | price: "RUB"}}</span> (наличными)</p>
+            </div>
+        </div>
+
         <div class="map">
             <app-map 
                 [markers]="[getSelectedAddress()]" 
@@ -18,8 +28,12 @@
                 [lockControls]="true">
             </app-map>
         </div>
+
+        <div class="close-form-button-container" *ngIf="isPurchaseComlete">
+            <button (click)="onCloseButton()">Закрыть</button>
+        </div>
     
-        <form [formGroup]="purchaseForm">
+        <form [formGroup]="purchaseForm" *ngIf="isPurchaseComlete === false">
             <div class="field">
                 <label for="firstName" class="required">Имя</label>
                 <div class="input-container">
@@ -67,12 +81,20 @@
                 </div>
             </div>
         </form>
-        <div class="button-container">
+        <div class="button-container" *ngIf="isPurchaseComlete === false">
+            <div *ngIf="isRequestLoading" class="loading"></div>
             <button 
                 (click)="onFormSubmit()" 
                 class="submit-button"
-                [disabled]="purchaseForm.invalid">Отправить</button>
-            <button (click)="onBackButton()">Назад</button>
+                [disabled]="purchaseForm.invalid"
+                *ngIf="isRequestLoading === false">
+                Отправить
+            </button>
+            <button 
+                (click)="onBackButton()"
+                *ngIf="isRequestLoading === false">
+                Назад
+            </button>
         </div>
     </div>
 </div>
