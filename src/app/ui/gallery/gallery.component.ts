@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { GoodsInfo, DEFAULT_GOODS_PLACEHOLDER } from 'src/app/domain';
 import { GoodsInfoLoaderService } from './goods-info-loader.service';
@@ -8,7 +8,7 @@ import { GoodsInfoLoaderService } from './goods-info-loader.service';
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss']
 })
-export class GalleryComponent implements AfterViewInit {
+export class GalleryComponent implements AfterViewInit, OnDestroy {
   public goods: (GoodsInfo | null)[] = [];
   public isGoodsInfoWindowShown: boolean = false;
   public selectedGoods: GoodsInfo | null = null;
@@ -46,13 +46,15 @@ export class GalleryComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.gallery = document.getElementById("gallery")
     
-    document.addEventListener("scroll", () => {
-      this.onScroll();
-    });
+    document.addEventListener("scroll", this.onScroll);
     
     setTimeout(() => {
       this.onScroll();
     }, 0);
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener("scroll", this.onScroll);
   }
 
   public onLoadMoreButtonClick() {
@@ -60,11 +62,8 @@ export class GalleryComponent implements AfterViewInit {
     this.onScroll();
   }
 
-  public onGalleryScrolled() {
+  public onScroll = () => {
     console.log("scroll");
-  }
-
-  public async onScroll() {
     if (this.isCameraTouchesBottom()) {
       this.loadNewData().then(() => {
         this.onScroll();
