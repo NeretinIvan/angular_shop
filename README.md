@@ -2,26 +2,16 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.6.
 
-## Development server
+## Run project
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+To run project, type `ng serve` in terminal. Then navigate to `http://localhost:4200/`.
 
-## Code scaffolding
+**IMPORTANT**
+You also need to run script `json-server src/generate-data-for-db.js` in terminal which will start json server which is backend placeholder needed for application to work properly. It will generate some testing data and run on `http://localhost:3000` by default
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Library used
 
-## Build
+Application used following libraries:
+1. Angular8-yandex-maps https://www.npmjs.com/package/angular8-yandex-maps
+2. JSON Server https://www.npmjs.com/package/json-server
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
