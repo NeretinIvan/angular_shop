@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.6.
 
+## About
+
+A shop site created to get practice and better skills in Angular
+
 ## Run project
 
 To run project, type `ng serve` in terminal. Then navigate to `http://localhost:4200/`.
